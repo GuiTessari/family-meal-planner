@@ -1,10 +1,17 @@
 # Requirements
 
-## Introduction
+## Overview
 
-This document describes the functional and non-functional requirements for Family Meal Planner.
+The goal of the MVP is to help families organize weekly meal preparation based on multiple individual diets.
 
-The goal is to define the expected system behavior independently from implementation details or technology choices.
+The system should transform individual dietary requirements into a practical weekly plan, helping users decide:
+
+* What each family member will eat.
+* What should be prepared in advance.
+* How much food should be cooked.
+* How meals should be assembled.
+
+The MVP prioritizes operational simplicity and focuses on solving the meal-planning problem before introducing analytics, automation, or AI-powered features.
 
 ---
 
@@ -14,318 +21,273 @@ The goal is to define the expected system behavior independently from implementa
 
 The system must allow users to create and manage family members.
 
-Each family member must contain:
+Each family member may include:
 
-- Name
-- Avatar or profile picture
-- Age
-- Notes
-- Dietary goals
-
-Examples of dietary goals:
-
-- Weight loss
-- Muscle gain
-- Healthy eating
-- Child nutrition
+* Name.
+* Age (optional).
+* Dietary restrictions (optional).
+* Dietary preferences (optional).
 
 ---
 
-## FR-002 — Dietary Preferences
+## FR-002 — Diet Management
 
-The system must allow users to configure food preferences for each family member.
+The system must allow users to create and manage diets.
 
-Preferences include:
+A diet belongs to a single family member.
 
-- Foods the person likes
-- Foods the person dislikes
-- Forbidden foods
-- Preferred substitutions
+A diet may be created manually or imported from external sources.
+
+Each diet must support:
+
+* Meals.
+* Foods.
+* Quantities.
+* Meal schedules.
+* Optional substitutions.
+
+A diet may remain active for multiple weeks.
+
+---
+
+## FR-003 — Ingredient Management
+
+The system must allow ingredients to be defined and reused across diets and recipes.
+
+An ingredient may include:
+
+* Name.
+* Unit of measurement.
+* Optional metadata.
 
 Examples:
 
-- Does not eat fish
-- Prefers chicken over beef
-- Avoids spicy food
+* Rice.
+* Chicken breast.
+* Ground beef.
+* Eggs.
 
 ---
 
-## FR-003 — Diet Import
+## FR-004 — Recipe Management
 
-The system must allow users to import diet plans from external documents.
+The system must allow users to create and manage recipes.
 
-Supported formats:
+A recipe defines how food is prepared.
 
-- PDF
+Each recipe may include:
+
+* Name.
+* Ingredients.
+* Preparation steps.
+* Optional preparation time.
+* Optional yield.
+
+Recipes may be associated with meals generated during weekly planning.
+
+---
+
+## FR-005 — Weekly Meal Plan Generation
+
+The system must generate a weekly meal plan based on the diets of all family members.
+
+The generated plan must:
+
+* Cover all days of the week.
+* Include all meals defined in each diet.
+* Respect dietary requirements.
+* Show what each family member will eat.
+
+Example:
+
+* Monday breakfast.
+* Tuesday lunch.
+* Wednesday dinner.
+
+---
+
+## FR-006 — Weekly Meal Plan Review
+
+The system must allow users to review a generated meal plan before approving it.
+
+Users may:
+
+* Inspect planned meals.
+* Replace meals manually (future enhancement).
+* Approve the weekly plan.
+
+Meal preparation may only start after approval.
+
+---
+
+## FR-007 — Cooking Plan Generation
+
+After approval, the system must generate a cooking plan for the week.
+
+The cooking plan must describe:
+
+* What should be prepared in advance.
+* Total quantities to prepare.
+* Which meals depend on each preparation.
+* Which family members consume each preparation.
+
+The cooking plan may distinguish between:
+
+* Food prepared during meal prep sessions.
+* Food prepared on demand.
+
+---
+
+## FR-008 — Cooking Instructions
+
+The system must generate step-by-step instructions describing how recipes should be prepared.
+
+Instructions must aggregate ingredient quantities for the entire family and for the selected planning period.
+
+Example:
+
+* Cook 2 kg of chicken breast.
+* Prepare 1 kg of rice.
+* Roast vegetables.
+
+---
+
+## FR-009 — Meal Assembly Instructions
+
+The system must generate instructions describing how prepared food should be divided among family members.
+
+Example:
+
+**Lunch Box #1**
+
+* Guilherme → 110 g rice + 65 g beans + 120 g chicken.
+* Karol → 70 g rice + 50 g beans + 80 g chicken.
+* Liz → 50 g rice + 35 g beans + 40 g chicken.
+
+---
+
+## FR-010 — Export
+
+The system must allow users to export generated plans.
+
+Supported formats may include:
+
+* Markdown.
+* JSON.
 
 Future versions may support:
 
-- Images
-- Spreadsheets
-
-The imported data must be reviewed before being saved.
-
----
-
-## FR-004 — Diet Management
-
-The system must allow users to:
-
-- Create diets manually
-- Edit imported diets
-- Remove meals
-- Add meals
-- Configure meal schedules
-- Define food quantities
-- Define substitution options
-
----
-
-## FR-005 — Meal Planning
-
-The system must allow users to create weekly meal plans.
-
-Users must be able to:
-
-- Create plans manually
-- Accept suggested plans
-- Edit generated plans
-- Duplicate previous plans
-
-Each plan must include:
-
-- Meals
-- Recipes
-- Quantities
-- Assigned family members
-
----
-
-## FR-006 — Weekly History
-
-The system must maintain a complete history of meal plans.
-
-Each historical record must contain:
-
-- Creation date
-- Planned meals
-- Recipes
-- Feedback
-- Completion status
-
----
-
-## FR-007 — Shopping Lists
-
-The system must generate shopping lists based on approved meal plans.
-
-Shopping lists must:
-
-- Aggregate ingredients
-- Calculate quantities
-- Organize items by category
-
-Example categories:
-
-- Proteins
-- Vegetables
-- Fruits
-- Dairy
-- Pantry items
-
----
-
-## FR-008 — Meal Preparation Workflow
-
-The system must provide a guided workflow for weekly meal preparation.
-
-The workflow includes:
-
-1. Meal plan selection.
-2. Shopping list generation.
-3. Shopping completion.
-4. Cooking phase.
-5. Meal assembly.
-6. Preparation completion.
-
----
-
-## FR-009 — Recipe Management
-
-The system must allow users to manage recipes.
-
-Each recipe must contain:
-
-- Ingredients
-- Preparation instructions
-- Preparation time
-- Yield
-- Notes
-
-Recipes may be reused across meal plans.
-
----
-
-## FR-010 — Meal Completion Tracking
-
-The system must allow family members to record whether a meal was completed.
-
-Possible states:
-
-- Completed
-- Skipped
-
-Each record must contain:
-
-- Date
-- Time
-- Family member
-- Meal reference
-
----
-
-## FR-011 — Exception Tracking
-
-The system should allow users to record why a meal plan was not followed.
-
-Examples:
-
-- Ate outside.
-- Ordered food.
-- Forgot the meal.
-- Attended an event.
-
-The system may also store replacement meals.
-
----
-
-## FR-012 — Meal Feedback
-
-The system must allow users to provide feedback about meals.
-
-Supported feedback types:
-
-- Rating
-- Text comments
-
-Future versions may support:
-
-- Voice notes
-
-Feedback must remain associated with:
-
-- Recipes
-- Meal plans
-- Family members
-
----
-
-## FR-013 — Habit Tracking
-
-The system must provide metrics related to eating habits.
-
-Examples:
-
-- Number of completed meals.
-- Weekly consistency.
-- Consecutive days.
-- Completion percentage.
-
----
-
-## FR-014 — Dashboard
-
-The system must provide dashboards containing historical and behavioral information.
-
-Examples:
-
-- Meal completion rate.
-- Favorite recipes.
-- Most skipped meals.
-- Weekly performance.
-- Historical trends.
-
----
-
-## FR-015 — AI-Assisted Features
-
-The system may provide intelligent assistance features.
-
-Examples:
-
-- Diet interpretation.
-- Meal suggestions.
-- Feedback analysis.
-- Recipe recommendations.
-
-The absence of these features must not prevent the system from functioning.
+* PDF.
+* Printable formats.
 
 ---
 
 # Non-Functional Requirements
 
-## NFR-001 — Usability
+## NFR-001 — Simplicity
 
-The application must be simple enough to be used by non-technical users.
+The MVP must prioritize simplicity over feature completeness.
 
-The kitchen tablet experience should require minimal interactions.
-
----
-
-## NFR-002 — Responsiveness
-
-The interface must work on:
-
-- Desktop browsers
-- Tablets
-- Mobile devices
+Solutions should focus on solving the weekly meal-planning problem with minimal complexity.
 
 ---
 
-## NFR-003 — Reliability
+## NFR-002 — Maintainability
 
-User data must persist across sessions.
+The system must be designed to support future extensions without requiring major rewrites.
 
-The system must avoid data loss.
+Future features may include:
 
----
-
-## NFR-004 — Extensibility
-
-The architecture should allow future support for:
-
-- Multiple families
-- Native applications
-- Calendar integrations
-- Grocery integrations
+* Shopping lists.
+* AI suggestions.
+* Habit tracking.
+* Analytics.
+* Mobile applications.
 
 ---
 
-## NFR-005 — Maintainability
+## NFR-003 — AI Independence
 
-The system should be organized in a way that facilitates long-term maintenance and future enhancements.
+The MVP must work without AI capabilities.
+
+AI-powered features are optional enhancements and must not be required for core workflows.
+
+---
+
+## NFR-004 — Responsiveness
+
+The application must support both desktop and tablet usage.
+
+---
+
+## NFR-005 — Documentation
+
+All project documentation must be written in English.
 
 ---
 
 ## NFR-006 — Privacy
 
-Personal information and dietary data must remain private.
+The repository is public.
 
-The system must avoid exposing sensitive information.
-
----
-
-## NFR-007 — Offline Tolerance
-
-Temporary connection failures should not compromise core user workflows.
+The project must avoid storing sensitive or personal information in version control.
 
 ---
 
 # Constraints
 
-Initial constraints:
+The MVP assumes:
 
-- Single-family support.
-- Household usage.
-- Kitchen tablet as the primary device.
-- Manual workflows must work without AI assistance.
+* A single household.
+* A limited number of family members.
+* Weekly meal preparation.
+* Shared meal planning.
+
+Multi-family support is explicitly out of scope.
+
+---
+
+# Out of Scope
+
+The following features are intentionally excluded from the MVP:
+
+* Shopping lists.
+* Habit tracking.
+* Dashboards and analytics.
+* Notifications.
+* Calendar integrations.
+* Mobile applications.
+* Multi-family support.
+* AI-generated meal suggestions.
+* Nutrition recommendations.
+* Meal feedback collection.
+* Voice interactions.
+
+---
+
+# Future Enhancements
+
+Future versions of the product may include:
+
+* Smart meal suggestions.
+* Recipe transformations.
+* Alternative meal options.
+* Shopping list generation.
+* Habit tracking.
+* Meal feedback.
+* AI-powered insights.
+* Native mobile applications.
+* Automation and integrations.
+
+---
+
+# Success Criteria
+
+The MVP will be considered successful if it allows a family to:
+
+1. Create or import their diets.
+2. Generate a weekly meal plan.
+3. Decide what to cook for the week.
+4. Follow the generated cooking instructions.
+5. Assemble meals correctly.
+6. Organize meal preparation with minimal manual effort.
